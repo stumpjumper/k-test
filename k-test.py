@@ -70,8 +70,11 @@ def main(cmdLineArgs):
       testLinesText = inputFile.read()
 
   testLines = eval(testLinesText)
+  numTestLines = len(testLines)
+  testLinesIndex = 0
 
-  for question, answer in testLines:
+  while testLinesIndex < numTestLines:
+    (question, answer) = testLines[testLinesIndex]
 
     correct = False
     while not correct:
@@ -116,12 +119,15 @@ def main(cmdLineArgs):
               print("Recieved : %s" % inChar)
               print(endSep)
               correct = False
+          # If made it here, character is correct, so reset flags
+          # and move on to next character
           answerSoFar += inChar
           tryAgain = False
           wrongCount = 0
         if not correct:
           break
       if correct:
+        testLinesIndex += 1
         print()
         print(startSep)
         print("Correct!!")
