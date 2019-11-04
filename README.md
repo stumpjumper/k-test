@@ -1,2 +1,2 @@
 # k-test
-Help USAFA Dollies study for their knowledge tests
+Help USAFA Doolie'ss study for their knowledge tests
