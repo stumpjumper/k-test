@@ -25,7 +25,10 @@ testLines = eval(testLinesText)
 startSep = "======================="
 endSep   = "-----------------------"
 
-print ("Welcome to k-test. Type ctrl-c to exit, ctrl-a for answer.")
+print ("Welcome to k-test.")
+print ("Type: ctrl-c to exit.")
+print ("      ctrl-a for answer.")
+print ("      ctrl-l to clear screen and restart answer.")
 
 for question, answer in testLines:
 
