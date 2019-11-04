@@ -9,11 +9,23 @@ getch = _Getch()
 
 wrongCountMaxDefault = 1
 
+ctrlHelp = \
+'''\
+Type: ctrl-a to see the answer.
+      ctrl-n for next question.
+      ctrl-p for previous question.
+      ctrl-l to clear screen and restart answer.
+      ctrl-h to see this control character help.
+      ctrl-c or ctrl-d to exit.\
+'''
+
+
 def setupCmdLineArgs(cmdLineArgs):
   usage =\
 """\
-%prog [-h|--help] [options] input_file\
+%prog [-h|--help] [options] input_file
 """
+  usage += os.linesep + ctrlHelp
   parser = OptionParser(usage)
                        
   help="verbose mode."
@@ -57,10 +69,9 @@ def main(cmdLineArgs):
   startSep = "======================="
   endSep   = "-----------------------"
 
+  print()
   print("Welcome to k-test.")
-  print("Type: ctrl-c to exit.")
-  print("      ctrl-a for answer.")
-  print("      ctrl-l to clear screen and restart answer.")
+  print(ctrlHelp)
   print()
   print("You will have %s chance per character." % wrongCountMax,
         "Use -t option to change" )
@@ -75,10 +86,12 @@ def main(cmdLineArgs):
 
   while testLinesIndex < numTestLines:
     (question, answer) = testLines[testLinesIndex]
+    getNewQuestion = False
 
     correct = False
     while not correct:
       correct = True
+      print(startSep)
       print("Question:")
       print(question)
       #print(answer)
@@ -89,16 +102,33 @@ def main(cmdLineArgs):
         while tryAgain and correct:
           inChar = getch()
           print(inChar, end='', flush=True)
-          if inChar in chr(12): # Found ctrl-l
+          # Ctrl-h
+          if inChar in chr(8):
+            print()
+            print("Help on control characters:")
+            print(ctrlHelp)
+            correct = False
+          # Ctrl-n 
+          elif inChar in chr(14):
+            testLinesIndex += 1
+            getNewQuestion = True
+          # Ctrl-p
+          elif inChar in chr(16):
+            testLinesIndex = max(testLinesIndex-1,0)
+            getNewQuestion = True
+          # Ctrl-l 
+          elif inChar in chr(12):
             if os.name == 'nt':
               os.system('cls')
             else:
               os.system('clear') 
             correct = False
-          elif inChar in [chr(3),chr(4),chr(7)]:
-            print("Recieved ctrl-c, ctrl-d, or ctrl-g. Exiting...")
+          # Ctrl-c, Ctrl-d
+          elif inChar in [chr(3),chr(4)]:
+            print("Recieved ctrl-c or ctrl-d. Exiting...")
             sys.exit(0)
-          elif inChar == chr(1): # Found ctrl-a
+          # Ctrl-a
+          elif inChar == chr(1):
             print()
             print(startSep)
             print("Answer:")
@@ -119,14 +149,21 @@ def main(cmdLineArgs):
               print("Recieved : %s" % inChar)
               print(endSep)
               correct = False
-          # If made it here, character is correct, so reset flags
-          # and move on to next character
+          # If made it here, character is not correct or ctrl char found
+          # so set flags and move on to next character
           answerSoFar += inChar
           tryAgain = False
           wrongCount = 0
-        if not correct:
+          if getNewQuestion:
+            correct = False
+            break # while try again
+        if getNewQuestion:
           break
-      if correct:
+        elif not correct:
+          break # for next char
+      if getNewQuestion:
+        break # while not correct
+      elif correct:
         testLinesIndex += 1
         print()
         print(startSep)
