@@ -47,25 +47,24 @@ for question, answer in testLines:
         else:
           os.system('clear') 
         correct = False
-        break
-      if inChar in [chr(3),chr(4),chr(7)]:
+      elif inChar in [chr(3),chr(4),chr(7)]:
         print("Recieved ctrl-c, ctrl-d, or ctrl-g. Exiting...")
         sys.exit(0)
-      if inChar == chr(1): # Found ctrl-a
+      elif inChar == chr(1): # Found ctrl-a
         print()
         print(startSep)
         print("Answer:")
         print(answer)
         print(endSep)
         correct = False
-        break
-      if ansChar != inChar:
+      elif ansChar != inChar:
         print()
         print(startSep)
         print("Expecting: %s" % ansChar)
         print("Recieved : %s" % inChar)
         print(endSep)
         correct = False
+      if not correct:
         break
     if correct:
       print()
