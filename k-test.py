@@ -7,14 +7,20 @@ from getchLib import _Getch
 
 getch = _Getch()
 
-testLines = [
-  ["Daugher",
-   "Marlene"],
-  ["Wing Commander",
-   "Cadet Colonel Bryant K. Ashe"],
-  ["10x2",
-   "20"],
-  ]
+if len(sys.argv) > 1 and sys.argv[1].lower() in ["-h","--help"]:
+  print("Usage: ktest.py <input_file_name>")
+  sys.exit(0)
+if len(sys.argv) != 2:
+  print("k-test.py: Missing a single input file name on commnd line",file=sys.stderr)
+  print("Expecting: ktest.py <input_file_name>",file=sys.stderr)
+  sys.exit(1)
+
+inputFilename = sys.argv[1]
+print("inputFilename =", inputFilename)
+with open(inputFilename, 'r') as inputFile:
+    testLinesText = inputFile.read()
+
+testLines = eval(testLinesText)
 
 startSep = "======================="
 endSep   = "-----------------------"
@@ -60,6 +66,9 @@ for question, answer in testLines:
         break
     if correct:
       print()
+      print(startSep)
       print("Correct!!")
+      print(endSep)
+      print()
     
 
