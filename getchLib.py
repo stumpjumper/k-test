@@ -49,4 +49,7 @@ class _GetchWindows:
 
     def __call__(self):
         import msvcrt
-        return msvcrt.getch()
+        #return msvcrt.getch()
+        #inChar = inChar.decode('ASCII') 
+        #inChar = inChar.decode('utf-8') Try this first
+        return msvcrt.getwch()
