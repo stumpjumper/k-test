@@ -94,7 +94,6 @@ def main(cmdLineArgs):
       print(startSep)
       print("Question:")
       print(question)
-      #print(answer)
       answerSoFar = ""
       for ansChar in answer:
         tryAgain = True
@@ -103,21 +102,21 @@ def main(cmdLineArgs):
           inChar = getch()
           print(inChar, end='', flush=True)
           # Ctrl-h
-          if inChar in chr(8):
+          if inChar == chr(8):
             print()
             print("Help on control characters:")
             print(ctrlHelp)
             correct = False
           # Ctrl-n 
-          elif inChar in chr(14):
+          elif inChar == chr(14):
             testLinesIndex += 1
             getNewQuestion = True
           # Ctrl-p
-          elif inChar in chr(16):
+          elif inChar == chr(16):
             testLinesIndex = max(testLinesIndex-1,0)
             getNewQuestion = True
           # Ctrl-l 
-          elif inChar in chr(12):
+          elif inChar == chr(12):
             if os.name == 'nt':
               os.system('cls')
             else:
@@ -133,7 +132,6 @@ def main(cmdLineArgs):
             print(startSep)
             print("Answer:")
             print(answer)
-            print(endSep)
             correct = False
           elif ansChar != inChar:
             wrongCount += 1
@@ -146,12 +144,11 @@ def main(cmdLineArgs):
               print()
               print(startSep)
               print("Expecting: %s" % ansChar)
-              print("Recieved : %s" % inChar)
-              print(endSep)
+              print("Recieved : %s" % str(inChar))
               correct = False
           # If made it here, character is not correct or ctrl char found
           # so set flags and move on to next character
-          answerSoFar += inChar
+          answerSoFar += str(inChar)
           tryAgain = False
           wrongCount = 0
           if getNewQuestion:
@@ -168,8 +165,6 @@ def main(cmdLineArgs):
         print()
         print(startSep)
         print("Correct!!")
-        print(endSep)
-        print()
     
 if (__name__ == '__main__'):
   main(sys.argv[1:])
