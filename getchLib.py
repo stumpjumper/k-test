@@ -3,18 +3,6 @@ From here:
 https://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user
 which is from here:
 http://code.activestate.com/recipes/134892/
-
-Sampe usage:
-from getchLib import _Getch
-import sys
-getch = _Getch()
-print("Will echo what you type. Ctrl-c to exit.")
-while True:
-  inChar = getch()
-  print(inChar, end='', flush=True)
-  if inChar in  [chr(3),chr(4),chr(7)]:
-    print("Recieved ctrl-c, ctrl-d, or ctrl-g. Exiting...")
-    sys.exit(0)
 '''
 
 class _Getch:
@@ -53,3 +41,14 @@ class _GetchWindows:
         #inChar = inChar.decode('ASCII') 
         #inChar = inChar.decode('utf-8') Try this first
         return msvcrt.getwch()
+
+if (__name__ == '__main__'):
+  import sys
+  getch = _Getch()
+  print("Will echo what you type. ctrl-c, d or g to exit.")
+  while True:
+    inChar = getch()
+    print(inChar, end='', flush=True)
+    if inChar in  [chr(3),chr(4),chr(7)]:
+      print("Recieved ctrl-c, ctrl-d, or ctrl-g. Exiting...")
+      sys.exit(0)
