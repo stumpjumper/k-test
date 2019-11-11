@@ -52,7 +52,7 @@ def setupCmdLineArgs(cmdLineArgs):
       print( "cmdLineArgs[%s] = '%s'" % (index, cmdLineArgs[index]))
 
   if numArgs != 1:
-    parser.error("Did not fine an input file name on the command line")
+    parser.error("Did not find an input file name on the command line")
 
   return (cmdLineOptions, cmdLineArgs)
 
