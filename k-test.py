@@ -95,7 +95,7 @@ def main(cmdLineArgs):
       print(startSep)
       print("Question:")
       print(question)
-      time.sleep(.5) # Get rid of any extra typing
+      time.sleep(.5) # Wait, then get rid of any extra typing
       answerSoFar = ""
       for ansChar in answer:
         tryAgain = True
@@ -135,6 +135,7 @@ def main(cmdLineArgs):
             print("Answer:")
             print(answer)
             correct = False
+          # Check if input char is correct
           elif ansChar != inChar:
             wrongCount += 1
             if wrongCount < wrongCountMax:
