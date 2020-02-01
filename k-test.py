@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 from optparse import OptionParser
 from getchLib import _Getch
 
@@ -94,6 +95,7 @@ def main(cmdLineArgs):
       print(startSep)
       print("Question:")
       print(question)
+      time.sleep(.5) # Get rid of any extra typing
       answerSoFar = ""
       for ansChar in answer:
         tryAgain = True
